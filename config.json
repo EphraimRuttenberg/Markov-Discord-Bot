@@ -1,11 +1,11 @@
 {
-"token": "NTA5MjU1ODM4OTU1NzMzMDI1.XU3rnQ.ibJqabBH4iwsmESeP3FkeLPqeaA",
+"token": "",
 "autorun": "true",
 "minChainLength": 10,
 "maxChainLength": 50,
 "messageInitiationAmount": 200,
 "userChainMessageLimit": 1000,
-"admins": ["163041163408965632"],
+"admins": [],
 "autoPrintInterval": 100,
 "cacheClearMsgInterval": 100,
 "cacheClearTimeInterval": 120,
