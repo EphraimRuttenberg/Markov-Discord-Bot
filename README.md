@@ -36,6 +36,9 @@ The commands for the bot are as follows, with square brackets indicating an opti
 
 This command will make the bot send a markov chain. If you ping a user after the command it will only use their messages as reference data
 
+- `!help`
+
+Displays a message similar to this list of commands. The help message can be edited by editing `HelpFile.txt`
 
 **Admin only commands**
 
