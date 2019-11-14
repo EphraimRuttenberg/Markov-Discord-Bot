@@ -1,0 +1,20 @@
+Markov Bot is a Discord bot by Buksss that uses Markov Chains (https://en.wikipedia.org/wiki/Markov_chain) to imitate users' typing patterns
+The commands for the bot are as follows, with square brackets indicating an optional argument for the command and angled brackets indicating necessary arguments:
+- `!chain [@user]`
+This command will make the bot send a markov chain. If you ping a user after the command it will only use their messages as reference data
+
+- `!help`
+Displays this message
+
+**Admin only commands**
+These commands are only for people designated admins in the config file:
+- `!blacklist <add/remove> <word/phrase/regex> <word to add/remove>`
+This command can either add or remove phrases, words, and regular expressions to/from the blacklist, all words or phrases should be in lowercase
+Word blacklists are only detected if a word by itself contains the blacklist
+Example: If 'nam' is blacklisted, "He said nam" will trigger the blacklist but not "His name" because it is part of a larger word
+Phrase blacklists detect if that sequence of characters exists in any form
+Example: If 'nam' is blacklisted, "He said nam" will trigger the blacklist and as well as "His name"
+Regex blacklists add a regular expression that can be matched to cover more cases than just a word or phrase blacklist
+
+- `!clear`
+This command clears the cache manually
