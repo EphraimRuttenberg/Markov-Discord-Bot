@@ -14,7 +14,7 @@ module.exports = {
         //If the command is !chain
         if (text.startsWith(`!chain`)) {
             //If a user is tagged
-            if (msg.mentions.users.size > 0) {
+            if (msg.mentions.users.size > 0 && config.userChainMessageLimit > 0) {
                 //Get the user that is tagged
                 var user = msg.mentions.users.first().id;
                 var userMarkovData = {};
