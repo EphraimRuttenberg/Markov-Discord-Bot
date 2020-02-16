@@ -7,45 +7,19 @@ module.exports = {
         const blacklist = MessageHandling.getBlacklist();
         const config = MessageHandling.getConfig();
         var text = msg.content;
-        if (text[0] !== "!") {
+        if (text[0] !== commandChar) {
             return;
         }
 
         //If the command is !chain
         if (text.startsWith(`!chain`)) {
-            //If a user is tagged
-            if (msg.mentions.users.size > 0 && config.userChainMessageLimit > 0) {
-                //Get the user that is tagged
-                var user = msg.mentions.users.first().id;
-                var userMarkovData = {};
-                var userChunks = {};
-                var userStartingWords = {};
-                //Go through all the user's messages and add them to a temporary dataset
-                const messages = [];
-                for (const [id, channel] of msg.guild.channels) {
-                    const channelMsgs = await MessageHandling.getMessages(channel, config.userChainMessageLimit);
-                    messages.push(...channelMsgs);
-                }
-                messages.forEach(message => {
-                    if(message.author.id == user && !(MessageHandling.breaksBlacklist(message) || message.content[0] == "!")){
-                        let data = MarkovChain.chunkText(message.content, userMarkovData, userChunks, userStartingWords);
-                        userMarkovData = data[0];
-                        userChunks = data[1];
-                        userStartingWords = data[2];
-                    }
-                });
-                msg.channel.send(`<@${user}>: ${MarkovChain.makeChain(userMarkovData, userChunks, userStartingWords,
-                    config.minChainLength, config.maxChainLength)}`);
-
-            } else {
-                //Otherwise, make a chain based on the regular dataset
-                let data = MessageHandling.getData();
-                let markovData = data[0];
-                let chunks = data[1];
-                let startingWords = data[2];
-                msg.channel.send(MarkovChain.makeChain(markovData, chunks, startingWords,
-                    config.minChainLength, config.maxChainLength));
-            }
+            //Otherwise, make a chain based on the regular dataset
+            let data = MessageHandling.getData();
+            let markovData = data[0];
+            let chunks = data[1];
+            let startingWords = data[2];
+            msg.channel.send(MarkovChain.makeChain(markovData, chunks, startingWords,
+                config.minChainLength, config.maxChainLength));
 
         //If the command is blacklist
     } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1) {
@@ -103,7 +77,6 @@ module.exports = {
                     msg.channel.send(`That is not the correct syntax for that command. Please refer to the !help command for help`);
                 }
                 MessageHandling.clearCache();
-                MessageHandling.initMessages(client);
                 MessageHandling.setBlacklist(blacklist);
                 fs.writeFile("blacklist.json", JSON.stringify(blacklist), (err) => {
                     if (err) {
@@ -114,9 +87,6 @@ module.exports = {
                 });
             } else if (text.startsWith(`!clear`) && config.admins.indexOf(msg.author.id) > -1) {
                 MessageHandling.clearCache();
-                if (config.initAfterClear == 1) {
-                    MessageHandling.initMessages(client);
-                }
                 msg.channel.send("Cache cleared");
             } else if (text.startsWith(`!help`)) {
                 var helpText = fs.readFileSync("HelpFile.txt", "utf8");

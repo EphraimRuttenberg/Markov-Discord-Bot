@@ -1,7 +1,7 @@
 Markov Bot is a Discord bot by Buksss that uses Markov Chains (https://en.wikipedia.org/wiki/Markov_chain) to imitate users' typing patterns
 The commands for the bot are as follows, with square brackets indicating an optional argument for the command and angled brackets indicating necessary arguments:
-- `!chain [@user]`
-This command will make the bot send a markov chain. If you ping a user after the command it will only use their messages as reference data
+- `!chain`
+This command will make the bot send a markov chain
 
 - `!help`
 Displays this message

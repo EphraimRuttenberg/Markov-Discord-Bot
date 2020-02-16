@@ -24,24 +24,6 @@ module.exports = {
         startingWords = data[2];
     },
 
-    initMessages : async function (client) {
-        const messages = [];
-        const channels = [];
-        for (const [id, guild] of client.guilds) {
-            channels.push(...guild.channels);
-        }
-        for (const [id, channel] of channels) {
-            if (channel.type == "text") {
-                const channelMsgs = await module.exports.getMessages(channel, config.messageInitiationAmount);
-                messages.push(...channelMsgs);
-            }
-        }
-        messages.forEach(message => {
-            if (!(message.author.bot)) {
-                module.exports.addData(message);
-            }
-        });
-    },
 
     clearCache: function () {
         chunks = {};
@@ -87,38 +69,7 @@ module.exports = {
         return false;
     },
 
-    getMessages : async function (channel, limit) {
-        if (channel.type !== "text") {
-            return [];
-        }
 
-        const sum_messages = [];
-        let last_id;
-
-        while (true) {
-            const options = { limit: 100 };
-            if (last_id) {
-                options.before = last_id;
-            }
-            var messages = [];
-            try {
-                messages = await channel.fetchMessages(options);
-            } catch (error) {
-                return [];
-            }
-            sum_messages.push(...messages.array());
-            if (!(messages.last())) {
-                return sum_messages;
-            }
-            last_id = messages.last().id;
-
-            if (messages.size != 100 || sum_messages >= limit) {
-                break;
-            }
-        }
-
-    return sum_messages;
-    },
 
     getData: function () {
         return [markovData, chunks, startingWords];
@@ -149,9 +100,6 @@ module.exports = {
         config.cacheClearMsgInterval > 0) {
             messagesSinceClear = 0;
             module.exports.clearCache();
-            if (config.initAfterClear == 1) {
-                module.exports.initMessages(client);
-            }
             msg.channel.send(`Cache automatically cleared after ${config.cacheClearMsgInterval} messages`);
         }
         //If enough time has elapsed to clear the cache
@@ -159,9 +107,6 @@ module.exports = {
         config.cacheClearTimeInterval > 0) {
             timeSinceClear = Date.now();
             module.exports.clearCache();
-            if (config.initAfterClear == 1) {
-                module.exports.initMessages(client);
-            }
             msg.channel.send(`Cache automatically cleared after ${config.cacheClearTimeInterval} minutes`);
         }
         module.exports.addData(msg);

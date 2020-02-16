@@ -1,5 +1,3 @@
-//TODO: Add autoprinting
-
 const Discord = require("discord.js");
 const MessageHandling = require("./MessageHandling.js");
 const CommandParser = require("./CommandParser");
@@ -12,7 +10,6 @@ var client = new Discord.Client(config);
 
 client.on('ready', () => {
     console.log('Connected');
-    MessageHandling.initMessages(client);
 });
 
 client.on('message', (msg) => {
