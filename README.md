@@ -24,7 +24,6 @@ Then set up the config file as such:
 
 - cacheClearTimeInterval: The number of minutes after which the cache will be automatically cleared, set to 0 to disable. It is highly recommended that either this setting or the one above is enabled, if not both
 
-- initAfterClear: Whether or not the bot will re-initiate the cache with more messages after it is cleared. Set to 0 if you do not want it to do this, otherwise set to 1
 
 - allowPings: Whether or not the bot should be allowed to ping other users. Set to 0 if you do not want it to do this, otherwise set to 1
 
