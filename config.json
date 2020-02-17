@@ -1,0 +1,14 @@
+{
+"token": "",
+"autorun": "true",
+"minChainLength": 10,
+"maxChainLength": 50,
+"messageInitiationAmount": 200,
+"userChainMessageLimit": 1000,
+"admins": [""],
+"autoPrintInterval": 100,
+"cacheClearMsgInterval": 100,
+"cacheClearTimeInterval": 120,
+"initAfterClear": 1,
+"allowPings" : 1
+}
