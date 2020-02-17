@@ -130,6 +130,7 @@ chunkText: function (inputText, wordPatterns, wordFrequencies, firstWords) {
         }
         count++;
         }
-        return chain;
+
+        return chain.replace("\0\b", "");
     }
 }
