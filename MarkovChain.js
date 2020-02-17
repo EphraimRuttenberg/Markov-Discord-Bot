@@ -32,7 +32,7 @@ function selectChunk (chunks) {
 }
 
 
-const stopChar = "\0\b";
+const stopChar = "\f";
 
 module.exports = {
 chunkText: function (inputText, wordPatterns, wordFrequencies, firstWords) {
@@ -131,6 +131,6 @@ chunkText: function (inputText, wordPatterns, wordFrequencies, firstWords) {
         count++;
         }
 
-        return chain.replace("\0\b", "");
+        return chain.replace("\f", "");
     }
 }
