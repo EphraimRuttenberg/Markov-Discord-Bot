@@ -24,7 +24,7 @@ Then set up the config file as such:
 
 - allowPings: Whether or not the bot should be allowed to ping other users. Set to 0 if you do not want it to do this, otherwise set to 1
 
-#Commands
+### Commands
 
 The commands for the bot are as follows, with square brackets indicating an optional argument for the command and angled brackets indicating necessary arguments:
 
