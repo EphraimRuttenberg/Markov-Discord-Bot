@@ -7,7 +7,7 @@ module.exports = {
         const blacklist = MessageHandling.getBlacklist();
         const config = MessageHandling.getConfig();
         var text = msg.content;
-        if (text[0] !== commandChar) {
+        if (text[0] !== "!") {
             return;
         }
 
