@@ -12,9 +12,6 @@ Then set up the config file as such:
 
 - maxChainLength: The number of words for which the chain will be cut short if it exceeds it without finishing, leave as 0 to ignore this setting, but be weary that this may result in infinite loops and a chain not being created
 
-- messageInitiationAmount: The number of messages the bot will read when it starts to add to its cache so it can make chains as soon as it goes online
-
-- userChainMessageLimit: The number of messages read from a user per channel when creating a user-specific chain. If this number is too high it *could* result in slowdown or excess RAM usage
 
 - admins: A list of users with permission to use admin commands. Each admin should be the user's id encased in double quotes, with each seperate string seperated by a comma
 
