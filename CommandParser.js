@@ -91,6 +91,8 @@ module.exports = {
             } else if (text.startsWith(`!help`)) {
                 var helpText = fs.readFileSync("HelpFile.txt", "utf8");
                 msg.channel.send(helpText);
+            } else if (text.startsWith(`!help`)) {
+                msg.channel.send("bro fucked up the command lmao");
             }
         }
     }
