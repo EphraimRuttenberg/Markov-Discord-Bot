@@ -95,6 +95,7 @@ module.exports = {
             msg.channel.send(MarkovChain.makeChain(markovData, chunks, startingWords,
                 config.minChainLength, config.maxChainLength));
         }
+
         //If theres enough messages to clear the cache
         if (messagesSinceClear >= config.cacheClearMsgInterval &&
         config.cacheClearMsgInterval > 0) {
@@ -102,6 +103,7 @@ module.exports = {
             module.exports.clearCache();
             msg.channel.send(`Cache automatically cleared after ${config.cacheClearMsgInterval} messages`);
         }
+
         //If enough time has elapsed to clear the cache
         if (Date.now() - timeSinceClear >= config.cacheClearTimeInterval * 60000 &&
         config.cacheClearTimeInterval > 0) {
@@ -109,6 +111,13 @@ module.exports = {
             module.exports.clearCache();
             msg.channel.send(`Cache automatically cleared after ${config.cacheClearTimeInterval} minutes`);
         }
+        
+        const attachments = (msg.attachments).array();
+
+        attachments.forEach(function(a) {
+            msg.content += (" " + a.url);
+        })
+
         module.exports.addData(msg);
     }
 }
