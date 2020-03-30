@@ -11,6 +11,10 @@ module.exports = {
             return;
         }
 
+        if (config.blacklisted_users.includes(msg.author.id)) {
+            return;
+        }
+
         //If the command is !chain
         if (text.startsWith(`!chain`)) {
             //Otherwise, make a chain based on the regular dataset
@@ -22,7 +26,7 @@ module.exports = {
                 config.minChainLength, config.maxChainLength));
 
         //If the command is blacklist
-    } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1) {
+        } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1) {
             var command = msg.content.split(" ");
             //For adding to the blacklist
             if (command[1] == "add") {
