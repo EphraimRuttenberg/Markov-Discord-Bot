@@ -7,5 +7,6 @@
 "autoPrintInterval": 100,
 "cacheClearMsgInterval": 100,
 "cacheClearTimeInterval": 120,
-"allowPings" : 1
+"allowPings" : 1,
+ "blacklisted_users": []
 }
