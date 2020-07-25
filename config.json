@@ -8,5 +8,6 @@
 "cacheClearMsgInterval": 100,
 "cacheClearTimeInterval": 120,
 "allowPings" : 1,
- "blacklisted_users": []
+"blacklisted_users": [],
+"noCommands": 0
 }
