@@ -31,9 +31,9 @@ Then set up the config file as such:
 
 The commands for the bot are as follows, with square brackets indicating an optional argument for the command and angled brackets indicating necessary arguments:
 
-- `!chain [@user]`
+- `!chain`
 
-This command will make the bot send a markov chain. If you ping a user after the command it will only use their messages as reference data
+This command will make the bot send a markov chain
 
 - `!help`
 
