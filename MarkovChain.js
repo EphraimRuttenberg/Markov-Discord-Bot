@@ -1,36 +1,24 @@
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
-
 function selectChunk (chunks) {
     //This function selects a chunk randomly using word frequencies as odds for each chunk
-    const startTime = Date.now();
+    //chunks should look like {word: wordFrequency, word2: word2Frequency, etc...}
     const total = Object.values(chunks).reduce((a, b) => a + b, 0); //Find the total of all the word frequencies
+    var range_start = 0;
+    var ranges = {};
+    var range_starts = [];
     //Each new value represents its proportion of the sum total, giving it a percentage chance from 0 to 1 of being selected
-    Object.keys(chunks).forEach(function (key) {
-        chunks[key] /= total;
-    })
+    
+    for (var word in chunks) {
+        ranges[range_start] = word;
+        range_starts.unshift(range_start);
+        range_start += (chunks[word]/total);
+    }
     var number = Math.random();
-    var index = 0;
-    const keys = shuffle(Object.keys(chunks));
-    //Subtract the chances of each word from a random number, return the word if the number hits 0
-    while (true) {
-        if (Date.now() - startTime > 5000) {
-            return null;
+    for (var i = 0; i < range_starts.length; i++) {
+        if (number > range_starts[i]) {
+            return ranges[range_starts[i]];
         }
-        number -= chunks[keys[index]];
-        if (number <= 0) {
-            return keys[index];
-        }
-
-        index += 1;
     }
 }
-
 
 const stopChar = "\f";
 

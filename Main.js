@@ -1,6 +1,7 @@
 const Discord = require("discord.js");
 const MessageHandling = require("./MessageHandling.js");
 const CommandParser = require("./CommandParser");
+const { stringify } = require("querystring");
 
 const config = MessageHandling.getConfig();
 const oauth = config["token"];
@@ -26,4 +27,20 @@ client.on('message', (msg) => {
 
 });
 
-client.login(oauth)
+client.on('error', (err) =>{
+    let me = client.users.get("163041163408965632");
+    let guilds = client.guilds.array();
+    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received error: \n \`\`\`\n ${err} \n\`\`\``;
+    me.send(dm);
+});
+
+client.on('warn', (warning) => {
+    let me = client.users.get("163041163408965632");
+    let guilds = client.guilds.array();
+    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received warning: \n \`\`\`\n ${warn} \n\`\`\``;
+    me.send(dm);
+});
+
+client.login(oauth);
+
+
