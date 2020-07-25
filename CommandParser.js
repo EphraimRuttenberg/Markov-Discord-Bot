@@ -10,13 +10,15 @@ module.exports = {
         if (text[0] !== "!") {
             return;
         }
-
-        if (config.blacklisted_users.includes(msg.author.id)) {
-            return;
-        }
+        try {
+            if (config.blacklisted_users.includes(msg.author.id)) {
+                return;
+            }
+        } catch (err) {}
 
         //If the command is !chain
         if (text.startsWith(`!chain`)) {
+            msg.channel.startTyping();
             //Otherwise, make a chain based on the regular dataset
             let data = MessageHandling.getData();
             let markovData = data[0];
@@ -27,6 +29,7 @@ module.exports = {
 
         //If the command is blacklist
         } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1) {
+            msg.channel.startTyping();
             var command = msg.content.split(" ");
             //For adding to the blacklist
             if (command[1] == "add") {
@@ -90,13 +93,19 @@ module.exports = {
                     msg.channel.send("Blacklist updated");
                 });
             } else if (text.startsWith(`!clear`) && config.admins.indexOf(msg.author.id) > -1) {
+                msg.channel.startTyping()
                 MessageHandling.clearCache();
                 msg.channel.send("Cache cleared");
             } else if (text.startsWith(`!help`)) {
                 var helpText = fs.readFileSync("HelpFile.txt", "utf8");
                 msg.channel.send(helpText);
             } else if (text.startsWith(`!chian`)) {
+                msg.channel.startTyping()
                 msg.channel.send("bro fucked up the command lmao");
+            } else if (text.startsWith(`!chhain`)) {
+                msg.channel.startTyping()
+                msg.channel.send("h key is broken");
             }
+            msg.channel.stopTyping(true);
         }
     }
