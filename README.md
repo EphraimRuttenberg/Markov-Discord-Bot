@@ -13,7 +13,7 @@ Then set up the config file as such:
 - maxChainLength: The number of words for which the chain will be cut short if it exceeds it without finishing, leave as 0 to ignore this setting, but be weary that this may result in infinite loops and a chain not being created
 
 
-- admins: A list of users with permission to use admin commands. Each admin should be the user's id encased in double quotes, with each seperate string seperated by a comma
+- admins: A list of users with permission to use admin commands. Each admin should be the user's id encased in double quotes, with each seperate string seperated by a comma. Example: ["289467912836", "178924612893"]
 
 - autoPrintInterval: The number of messages after which the bot will automatically send a markov chain. Set to 0 if you do not want it to automatically send markov chains
 
@@ -21,8 +21,11 @@ Then set up the config file as such:
 
 - cacheClearTimeInterval: The number of minutes after which the cache will be automatically cleared, set to 0 to disable. It is highly recommended that either this setting or the one above is enabled, if not both
 
-
 - allowPings: Whether or not the bot should be allowed to ping other users. Set to 0 if you do not want it to do this, otherwise set to 1
+
+- blacklisted_users: List of users who cannot use commands at all. Each entry should be the user's id encased in double quotes, with each seperate string seperated by a comma. Example: ["289467912836", "178924612893"]
+
+- noCommands: 1 or 0. If 1, !chain and !help will not do anything
 
 ### Commands
 
