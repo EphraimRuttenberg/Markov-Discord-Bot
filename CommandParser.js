@@ -7,6 +7,8 @@ module.exports = {
         const blacklist = MessageHandling.getBlacklist();
         const config = MessageHandling.getConfig();
         var text = msg.content;
+        const noCommands = config["noCommands"];
+
         if (text[0] !== "!") {
             return;
         }
@@ -17,7 +19,7 @@ module.exports = {
         } catch (err) {}
 
         //If the command is !chain
-        if (text.startsWith(`!chain`)) {
+        if (text.startsWith(`!chain`) && !noCommands) {
             msg.channel.startTyping();
             //Otherwise, make a chain based on the regular dataset
             let data = MessageHandling.getData();
@@ -96,13 +98,13 @@ module.exports = {
                 msg.channel.startTyping()
                 MessageHandling.clearCache();
                 msg.channel.send("Cache cleared");
-            } else if (text.startsWith(`!help`)) {
+            } else if (text.startsWith(`!help`) && !noCommands) {
                 var helpText = fs.readFileSync("HelpFile.txt", "utf8");
                 msg.channel.send(helpText);
-            } else if (text.startsWith(`!chian`)) {
+            } else if (text.startsWith(`!chian`) && !noCommands) {
                 msg.channel.startTyping()
                 msg.channel.send("bro fucked up the command lmao");
-            } else if (text.startsWith(`!chhain`)) {
+            } else if (text.startsWith(`!chhain`) && !noCommands) {
                 msg.channel.startTyping()
                 msg.channel.send("h key is broken");
             }
