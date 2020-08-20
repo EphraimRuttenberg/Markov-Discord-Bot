@@ -8,7 +8,6 @@ const oauth = config["token"];
 
 var client = new Discord.Client(config);
 
-
 client.on('ready', () => {
     console.log('Connected');
 });
@@ -30,14 +29,14 @@ client.on('message', (msg) => {
 client.on('error', (err) =>{
     let me = client.users.get("163041163408965632");
     let guilds = client.guilds.array();
-    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received error: \n \`\`\`\n ${err} \n\`\`\``;
+    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received error: \n \`\`\`\n ${err.message} \n\`\`\``;
     me.send(dm);
 });
 
 client.on('warn', (warning) => {
     let me = client.users.get("163041163408965632");
     let guilds = client.guilds.array();
-    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received warning: \n \`\`\`\n ${warn} \n\`\`\``;
+    let dm = `Bot that is in: \n \`\`\`\n ${guilds} \n\`\`\` \n received warning: \n \`\`\`\n ${warn.message} \n\`\`\``;
     me.send(dm);
 });
 
