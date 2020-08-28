@@ -27,7 +27,7 @@ Then set up the config file as such:
 
 - noCommands: 1 or 0. If 1, !chain and !help will not do anything
 
-- replyChannel: A channel id surrounded by quotes. If included and not blank, will only send messages in the specified channel. Example: "replyChannel": "346534123123"
+- replyChannel: A list channel id's surrounded by quotes and seperated by commas. If included and not blank, will only send messages in the specified channels, and will default to the first one if it redirects a message. Example: "replyChannel": ["346534123123", "23456432455623"]. In this example it will reply in both of those channels, but will redirect messages from all other channels to the first one denoted by 346534123123
 
 - commandChannel: List of channels that the bot will accept commands in. Leave blank or do not include to accept commands from anywhere. Overriden by noCommands. Format is a list of channel id's seperated by commas surrounded by square brackets. Example: "commandChannel": ["78594932423644", "3237483687623"]
 
