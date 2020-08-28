@@ -19,7 +19,7 @@ module.exports = {
         if (replyChannels.includes(channel.id)) {
             channel.send(string);
         } else {
-            client.channels.get(replyChannels[0]).send(string);
+            client.channels.fetch(replyChannels[0]).send(string);
         }
     },
 
