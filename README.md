@@ -27,6 +27,10 @@ Then set up the config file as such:
 
 - noCommands: 1 or 0. If 1, !chain and !help will not do anything
 
+- replyChannel: A channel id surrounded by quotes. If included and not blank, will only send messages in the specified channel. Example: "replyChannel": "346534123123"
+
+- commandChannel: List of channels that the bot will accept commands in. Leave blank or do not include to accept commands from anywhere. Overriden by noCommands. Format is a list of channel id's seperated by commas surrounded by square brackets. Example: "commandChannel": ["78594932423644", "3237483687623"]
+
 ### Commands
 
 The commands for the bot are as follows, with square brackets indicating an optional argument for the command and angled brackets indicating necessary arguments:
