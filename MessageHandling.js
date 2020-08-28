@@ -14,12 +14,13 @@ var timeSinceClear = Date.now();
 
 module.exports = {
 
-    send: function (string, channel, client) {
+    send: async function (string, channel, client) {
         replyChannels = config.replyChannel;
         if (replyChannels.includes(channel.id)) {
             channel.send(string);
         } else {
-            client.channels.fetch(replyChannels[0]).send(string);
+            rc = await client.channels.fetch(replyChannels[0]);
+            rc.send(string);
         }
     },
 
