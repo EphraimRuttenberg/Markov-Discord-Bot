@@ -10,7 +10,18 @@ var messagesSent = 0;
 var messagesSinceClear = 0;
 var timeSinceClear = Date.now();
 
+
+
 module.exports = {
+
+    send: function (string, channel, client) {
+        replyChannel = config.replyChannel;
+        if (replyChannel) {
+            client.channels.get(replyChannel).send(string);
+        } else {
+            channel.send(string);
+        }
+    },
 
     addData: function (msg) {
         var text = msg.content;
@@ -92,8 +103,8 @@ module.exports = {
         messagesSinceClear++;
         if (messagesSent >= config.autoPrintInterval && config.autoPrintInterval > 0) {
             messagesSent = 0;
-            msg.channel.send(MarkovChain.makeChain(markovData, chunks, startingWords,
-                config.minChainLength, config.maxChainLength));
+            module.exports.send(MarkovChain.makeChain(markovData, chunks, startingWords,
+                config.minChainLength, config.maxChainLength), msg.channel, client);
         }
 
         //If theres enough messages to clear the cache
@@ -101,7 +112,7 @@ module.exports = {
         config.cacheClearMsgInterval > 0) {
             messagesSinceClear = 0;
             module.exports.clearCache();
-            msg.channel.send(`Cache automatically cleared after ${config.cacheClearMsgInterval} messages`);
+            module.exports.send(`Cache automatically cleared after ${config.cacheClearMsgInterval} messages`, msg.channel, client);
         }
 
         //If enough time has elapsed to clear the cache
@@ -109,7 +120,7 @@ module.exports = {
         config.cacheClearTimeInterval > 0) {
             timeSinceClear = Date.now();
             module.exports.clearCache();
-            msg.channel.send(`Cache automatically cleared after ${config.cacheClearTimeInterval} minutes`);
+            module.exports.send(`Cache automatically cleared after ${config.cacheClearTimeInterval} minutes`, msg.channel, client);
         }
         
         const attachments = (msg.attachments).array();

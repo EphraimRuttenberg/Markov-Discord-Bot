@@ -2,6 +2,15 @@ const MessageHandling = require("./MessageHandling.js");
 const MarkovChain = require("./MarkovChain.js");
 const fs = require("fs");
 
+function correctChannel(channel, client) {
+    commandChannels = MessageHandling.getConfig().commandChannel;
+    if (commandChannels) {
+        return (commandChannels.includes(channel.id));
+    } else {
+        return true;
+    }
+}
+
 module.exports = {
     checkCommands : async function (msg, client) {
         const blacklist = MessageHandling.getBlacklist();
@@ -19,36 +28,34 @@ module.exports = {
         } catch (err) {}
 
         //If the command is !chain
-        if (text.startsWith(`!chain`) && !noCommands) {
-            msg.channel.startTyping();
+        if (text.startsWith(`!chain`) && !noCommands && correctChannel(msg.channel, client)) {
             //Otherwise, make a chain based on the regular dataset
             let data = MessageHandling.getData();
             let markovData = data[0];
             let chunks = data[1];
             let startingWords = data[2];
-            msg.channel.send(MarkovChain.makeChain(markovData, chunks, startingWords,
-                config.minChainLength, config.maxChainLength));
+            MessageHandling.send(MarkovChain.makeChain(markovData, chunks, startingWords,
+                config.minChainLength, config.maxChainLength), msg.channel, client);
 
         //If the command is blacklist
-        } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1) {
-            msg.channel.startTyping();
+        } else if (text.startsWith(`!blacklist`) && config.admins.indexOf(msg.author.id) > -1 && correctChannel(msg.channel, client)) {
             var command = msg.content.split(" ");
             //For adding to the blacklist
             if (command[1] == "add") {
                 if (command[2] == "word") {
                     let word = command[3];
                     blacklist.singleWords.push(word);
-                    msg.channel.send(`Added the word "${word}" to the blacklist`);
+                    MessageHandling.send(`Added the word "${word}" to the blacklist`, msg.channel, client);
 
                 } else if (command[2] == "phrase") {
                     let phrase = command.slice(3).join(" ");
                     blacklist.fullPhrases.push(phrase);
-                    msg.channel.send(`Added the phrase "${phrase}" to the blacklist`);
+                    MessageHandling.send(`Added the phrase "${phrase}" to the blacklist`, msg.channel, client);
 
                 } else if (command [2] == "regex") {
                     let regex = command[3];
                     blacklist.regex.push(regex);
-                    msg.channel.send(`Added the regular expression "${regex}" to the blacklist`);
+                    MessageHandling.send(`Added the regular expression "${regex}" to the blacklist`, msg.channel, client);
                 }
             //For removing from the blacklist
             } else if (command[1] == "remove") {
@@ -57,9 +64,9 @@ module.exports = {
                     let index = blacklist.singleWords.indexOf(command[3]);
                     if (index > -1) {
                         blacklist.singleWords.splice(index);
-                        msg.channel.send(`Removed the word "${word}" from the blacklist`);
+                        MessageHandling.send(`Removed the word "${word}" from the blacklist`, msg.channel, client);
                     } else {
-                        msg.channel.send(`${word} is not a word in the blacklist!`);
+                        MessageHandling.send(`${word} is not a word in the blacklist!`, msg.channel, client);
                     }
 
                 } else if (command[2] == "phrase") {
@@ -67,9 +74,9 @@ module.exports = {
                     let index = blacklist.fullPhrases.indexOf(command[3]);
                     if (index > -1) {
                         blacklist.fullPhrases.splice(index);
-                        msg.channel.send(`Removed the phrase "${phrase}" from the blacklist`);
+                        MessageHandling.send(`Removed the phrase "${phrase}" from the blacklist`, msg.channel, client);
                     } else {
-                        msg.channel.send(`${phrase} is not a phrase in the blacklist!`);
+                        MessageHandling.send(`${phrase} is not a phrase in the blacklist!`, msg.channel, client);
                     }
 
                 } else if (command [2] == "regex") {
@@ -77,13 +84,13 @@ module.exports = {
                     let index = blacklist.regex.indexOf(command[3]);
                     if (index > -1) {
                         blacklist.regex.splice(index);
-                        msg.channel.send(`Removed the regular expression "${regex}" from the blacklist`);
+                        MessageHandling.send(`Removed the regular expression "${regex}" from the blacklist`, msg.channel, client);
                     } else {
-                        msg.channel.send(`${regex} is not a regular expression in the blacklist!`);
+                        MessageHandling.send(`${regex} is not a regular expression in the blacklist!`, msg.channel, client);
                     }
                 }
                 } else {
-                    msg.channel.send(`That is not the correct syntax for that command. Please refer to the !help command for help`);
+                    MessageHandling.send(`That is not the correct syntax for that command. Please refer to the !help command for help`, msg.channel, client);
                 }
                 MessageHandling.clearCache();
                 MessageHandling.setBlacklist(blacklist);
@@ -92,22 +99,15 @@ module.exports = {
                         throw err;
                      }
                     // success case, the file was saved
-                    msg.channel.send("Blacklist updated");
+                    MessageHandling.send("Blacklist updated", msg.channel, client);
                 });
-            } else if (text.startsWith(`!clear`) && config.admins.indexOf(msg.author.id) > -1) {
+            } else if (text.startsWith(`!clear`) && config.admins.indexOf(msg.author.id) > -1 && correctChannel(msg.channel, client)) {
                 msg.channel.startTyping()
                 MessageHandling.clearCache();
-                msg.channel.send("Cache cleared");
-            } else if (text.startsWith(`!help`) && !noCommands) {
+                MessageHandling.send("Cache cleared", msg.channel, client);
+            } else if (text.startsWith(`!help`) && !noCommands && correctChannel(msg.channel, client)) {
                 var helpText = fs.readFileSync("HelpFile.txt", "utf8");
-                msg.channel.send(helpText);
-            } else if (text.startsWith(`!chian`) && !noCommands) {
-                msg.channel.startTyping()
-                msg.channel.send("bro fucked up the command lmao");
-            } else if (text.startsWith(`!chhain`) && !noCommands) {
-                msg.channel.startTyping()
-                msg.channel.send("h key is broken");
-            }
-            msg.channel.stopTyping(true);
+                MessageHandling.send(helpText, msg.channel, client);
         }
     }
+}
