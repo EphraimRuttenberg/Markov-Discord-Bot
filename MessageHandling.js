@@ -15,11 +15,11 @@ var timeSinceClear = Date.now();
 module.exports = {
 
     send: function (string, channel, client) {
-        replyChannel = config.replyChannel;
-        if (replyChannel) {
-            client.channels.get(replyChannel).send(string);
-        } else {
+        replyChannels = config.replyChannel;
+        if (replyChannels.includes(channel.id)) {
             channel.send(string);
+        } else {
+            client.channels.get(replyChannels[0]).send(string);
         }
     },
 
