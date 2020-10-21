@@ -18,6 +18,7 @@ module.exports = {
         replyChannels = config.replyChannel;
         if (!replyChannels) {
             replyChannels
+        }
         if (replyChannels.includes(channel.id)) {
             channel.send(string);
         } else {
