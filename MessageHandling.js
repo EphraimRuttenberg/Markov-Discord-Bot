@@ -16,8 +16,8 @@ module.exports = {
 
     send: async function (string, channel, client) {
         replyChannels = config.replyChannel;
-        if (!replyChannels) {
-            replyChannels
+        if (replyChannels == undefined || replyChannels == []) {
+            replyChannels = [channel.id]
         }
         if (replyChannels.includes(channel.id)) {
             channel.send(string);
